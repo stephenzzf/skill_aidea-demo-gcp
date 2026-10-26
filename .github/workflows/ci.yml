@@ -45,4 +45,4 @@ jobs:
           curl --fail --location --max-time 60 --silent --show-error --output checksums.txt "$release/gitleaks_8.30.1_checksums.txt"
           grep "  $archive$" checksums.txt | sha256sum --check --strict
           tar -xzf "$archive" gitleaks
-          ./gitleaks git --redact=100 --no-banner "$GITHUB_WORKSPACE"
+          ./gitleaks git --redact=100 --no-banner --verbose "$GITHUB_WORKSPACE"
