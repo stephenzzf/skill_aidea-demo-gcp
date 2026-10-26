@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "id": "whatsapp",
+  "confirmed": true,
+  "customer": "澄海生活",
+  "assistantName": "客户服务助手",
+  "title": "让每一次咨询都有清晰的下一步",
+  "subtitle": "体验从订单查询、服务建议到回复草稿的客户服务流程。",
+  "audience": "客户服务负责人",
+  "goal": "演示服务人员基于合成订单信息处理客户咨询",
+  "solution": "查询示例订单，整理服务建议与 WhatsApp 回复草稿；所有发送均为模拟",
+  "prompts": [
+    "查询示例订单的物流进度",
+    "如何处理延迟咨询？",
+    "生成 WhatsApp 回复草稿"
+  ],
+  "steps": [
+    {
+      "question": "查询示例订单的物流进度",
+      "expected": "展示合成订单状态，不请求真实订单系统"
+    },
+    {
+      "question": "如何处理延迟咨询？",
+      "expected": "给出待人工确认的服务建议"
+    },
+    {
+      "question": "生成 WhatsApp 回复草稿",
+      "expected": "展示未发送草稿，不调用发送API"
+    }
+  ],
+  "acceptance": [
+    "订单信息明确为合成示例",
+    "可以连续追问",
+    "草稿及所有操作均不进行真实发送"
+  ],
+  "model": {
+    "project": "",
+    "location": "",
+    "model": ""
+  }
+}

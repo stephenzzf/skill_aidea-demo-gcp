@@ -1,0 +1,32 @@
+#!include:.gitignore
+
+# Do not upload repository metadata or this upload policy.
+.git/
+.gitignore
+.gcloudignore
+
+# Keep the existing local-only exclusions explicit in the upload rules too.
+node_modules/
+dist/
+evidence/
+.env*
+!.env.example
+
+# Keep root runtime files, logs, and common package-manager logs out of the source archive.
+/logs/
+/runtime.log
+/runtime.log.*
+/runtime.pid
+/runtime.pid.lock
+/*.log
+/*.log.*
+/npm-debug.log*
+/yarn-debug.log*
+/pnpm-debug.log*
+
+# Do not recursively upload compressed source/evidence bundles.
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z

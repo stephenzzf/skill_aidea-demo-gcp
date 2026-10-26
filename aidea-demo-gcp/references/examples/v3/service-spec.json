@@ -1,0 +1,680 @@
+{
+  "version": 3,
+  "id": "service-operations-v3",
+  "customer": "设备服务演示案例",
+  "assistantName": "服务协调助手",
+  "title": "设备服务与履约协作",
+  "subtitle": "从服务受理到解决反馈，按领域追踪同一服务案例。",
+  "audience": "服务协调员、现场技术人员、服务质量负责人",
+  "goal": "让服务团队从统一案例识别影响、协调核实、完成处理并回读服务反馈。",
+  "solution": "把客户报修、设备与服务活动关联到同一案例。服务受理领域负责分类、分派及必要补充；履约跟进领域记录处理进度、解决证据与客户反馈。看板使用合成案例确定性统计，模拟动作只改变演示事件，不触发真实通知或派工。",
+  "confirmed": true,
+  "prompts": [
+    "当前哪些案例等待处理？",
+    "这台设备最近有什么服务记录？",
+    "完成案例后哪些服务指标会变化？"
+  ],
+  "steps": [
+    {
+      "id": "intake-case",
+      "question": "打开待受理案例 SR-204 并确认设备与影响级别。",
+      "expected": "展示关联设备、来源和当前状态。",
+      "role": "coordinator",
+      "pageId": "intake",
+      "preconditions": [
+        "使用提供的合成演示案例。"
+      ],
+      "inputs": [
+        "案例 SR-204"
+      ],
+      "observation": "设备序列号、问题摘要与状态同一案例记录一致。",
+      "claimIds": [
+        "case-linked"
+      ]
+    },
+    {
+      "id": "handoff-case",
+      "question": "补齐必要信息并模拟交接给现场服务。",
+      "expected": "案例进入处理中，页面显示本地模拟回执。",
+      "role": "coordinator",
+      "pageId": "intake",
+      "preconditions": [
+        "案例处于待受理。"
+      ],
+      "inputs": [
+        "问题类别和影响说明"
+      ],
+      "observation": "只有服务状态改变，未创建真实派工或发送消息。",
+      "claimIds": [
+        "simulated-handoff"
+      ]
+    },
+    {
+      "id": "resolve-case",
+      "question": "记录合成处理结果和验证证据，再关闭案例。",
+      "expected": "处理结果及相关活动可在履约跟进中回读，当前运营计数更新。",
+      "role": "technician",
+      "pageId": "fulfillment",
+      "preconditions": [
+        "案例处于处理中。"
+      ],
+      "inputs": [
+        "处理记录、验证证据"
+      ],
+      "observation": "同一案例关联记录可追溯；历史客户满意度不因模拟关闭而改变。",
+      "claimIds": [
+        "case-linked",
+        "simulated-handoff"
+      ]
+    }
+  ],
+  "acceptance": [
+    "案例和设备引用有效且数据标为合成。",
+    "交接后状态及模拟回执可查看。",
+    "跨领域读取同一案例与服务活动。",
+    "模拟处理不改写历史快照或触发真实通知。"
+  ],
+  "model": {
+    "project": "",
+    "location": "",
+    "model": ""
+  },
+  "workspace": {
+    "views": [
+      "overview",
+      "records",
+      "workflow",
+      "assistant"
+    ],
+    "roles": [
+      {
+        "id": "coordinator",
+        "label": "服务协调员"
+      },
+      {
+        "id": "technician",
+        "label": "现场技术人员"
+      },
+      {
+        "id": "quality",
+        "label": "服务质量"
+      }
+    ],
+    "stages": [
+      {
+        "id": "new",
+        "label": "待受理"
+      },
+      {
+        "id": "triaged",
+        "label": "已分类"
+      },
+      {
+        "id": "working",
+        "label": "处理中"
+      },
+      {
+        "id": "resolved",
+        "label": "待结果确认"
+      },
+      {
+        "id": "closed",
+        "label": "已完成"
+      }
+    ],
+    "datasets": [
+      {
+        "id": "cases",
+        "label": "服务案例",
+        "key": "id",
+        "origin": "synthetic",
+        "source": "固定种子服务案例，合成演示数据",
+        "fields": [
+          {
+            "id": "id",
+            "label": "案例编号",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "status",
+            "label": "处理状态",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "day",
+            "label": "报修日期",
+            "type": "date",
+            "required": true
+          },
+          {
+            "id": "customer_id",
+            "label": "客户编号",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "asset_id",
+            "label": "设备编号",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "issue",
+            "label": "问题摘要",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "severity",
+            "label": "影响级别",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "resolution",
+            "label": "处理结果",
+            "type": "string"
+          },
+          {
+            "id": "evidence",
+            "label": "验证证据",
+            "type": "string"
+          },
+          {
+            "id": "feedback",
+            "label": "客户反馈",
+            "type": "string"
+          },
+          {
+            "id": "stale",
+            "label": "建议待重评",
+            "type": "boolean",
+            "required": true
+          }
+        ],
+        "relations": [
+          {
+            "field": "customer_id",
+            "dataset": "customers",
+            "target": "id"
+          },
+          {
+            "field": "asset_id",
+            "dataset": "assets",
+            "target": "id"
+          }
+        ]
+      },
+      {
+        "id": "customers",
+        "label": "演示客户",
+        "key": "id",
+        "origin": "synthetic",
+        "source": "虚构客户资料，仅供流程演示",
+        "fields": [
+          {
+            "id": "id",
+            "label": "客户编号",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "name",
+            "label": "演示客户名称",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "region",
+            "label": "服务地区",
+            "type": "string",
+            "required": true
+          }
+        ]
+      },
+      {
+        "id": "assets",
+        "label": "演示设备",
+        "key": "id",
+        "origin": "synthetic",
+        "source": "虚构设备档案，仅供流程演示",
+        "fields": [
+          {
+            "id": "id",
+            "label": "设备编号",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "type",
+            "label": "设备类型",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "model",
+            "label": "型号",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "installed",
+            "label": "安装日期",
+            "type": "date",
+            "required": true
+          }
+        ]
+      },
+      {
+        "id": "touchpoints",
+        "label": "服务活动",
+        "key": "id",
+        "origin": "synthetic",
+        "source": "固定种子服务活动，合成演示数据",
+        "fields": [
+          {
+            "id": "id",
+            "label": "活动编号",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "case_id",
+            "label": "服务案例",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "day",
+            "label": "活动日期",
+            "type": "date",
+            "required": true
+          },
+          {
+            "id": "activity",
+            "label": "服务活动",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "note",
+            "label": "活动说明",
+            "type": "string"
+          }
+        ],
+        "relations": [
+          {
+            "field": "case_id",
+            "dataset": "cases",
+            "target": "id"
+          }
+        ]
+      }
+    ],
+    "metrics": [
+      {
+        "id": "new_cases",
+        "label": "新受理案例",
+        "dataset": "cases",
+        "operation": "count",
+        "filters": [
+          {
+            "field": "status",
+            "op": "eq",
+            "value": "new"
+          }
+        ],
+        "description": "当前待受理案例数，按演示记录确定性计算。",
+        "scope": "current",
+        "groupBy": "severity",
+        "timeField": "day"
+      },
+      {
+        "id": "open_cases",
+        "label": "处理中案例",
+        "dataset": "cases",
+        "operation": "count",
+        "filters": [
+          {
+            "field": "status",
+            "op": "eq",
+            "value": "working"
+          }
+        ],
+        "description": "当前处理中案例数，不代表真实服务 SLA。",
+        "scope": "current",
+        "groupBy": "severity",
+        "timeField": "day"
+      },
+      {
+        "id": "service_activities",
+        "label": "服务活动数",
+        "dataset": "touchpoints",
+        "operation": "count",
+        "description": "当前筛选范围的合成服务活动记录。",
+        "scope": "snapshot",
+        "groupBy": "activity",
+        "timeField": "day"
+      },
+      {
+        "id": "closure_rate",
+        "label": "演示案例完成率",
+        "dataset": "cases",
+        "operation": "ratio",
+        "numerator": [
+          {
+            "field": "status",
+            "op": "eq",
+            "value": "closed"
+          }
+        ],
+        "denominator": [],
+        "unit": "%",
+        "description": "合成案例中已完成数 / 当前范围案例数，不是客户服务绩效。",
+        "scope": "current",
+        "timeField": "day"
+      }
+    ],
+    "workflow": {
+      "dataset": "cases",
+      "statusField": "status",
+      "staleField": "stale",
+      "editableFields": [
+        "severity",
+        "issue",
+        "resolution",
+        "evidence",
+        "feedback"
+      ],
+      "transitions": [
+        {
+          "id": "triage",
+          "label": "分类并接收",
+          "from": [
+            "new"
+          ],
+          "to": "triaged",
+          "role": "coordinator",
+          "inputFields": [
+            {
+              "id": "severity",
+              "label": "影响级别",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "severity"
+          ]
+        },
+        {
+          "id": "dispatch",
+          "label": "模拟交接处理",
+          "from": [
+            "triaged"
+          ],
+          "to": "working",
+          "role": "coordinator",
+          "inputFields": [],
+          "requiredFields": []
+        },
+        {
+          "id": "request_more",
+          "label": "退回补充",
+          "from": [
+            "working"
+          ],
+          "to": "new",
+          "role": "technician",
+          "inputFields": [
+            {
+              "id": "issue",
+              "label": "需要补充的信息",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "issue"
+          ],
+          "invalidates": true
+        },
+        {
+          "id": "resolve",
+          "label": "记录处理结果",
+          "from": [
+            "working"
+          ],
+          "to": "resolved",
+          "role": "technician",
+          "inputFields": [
+            {
+              "id": "resolution",
+              "label": "处理结果",
+              "type": "string",
+              "required": true
+            },
+            {
+              "id": "evidence",
+              "label": "验证证据",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "resolution",
+            "evidence"
+          ]
+        },
+        {
+          "id": "close",
+          "label": "确认完成并记录反馈",
+          "from": [
+            "resolved"
+          ],
+          "to": "closed",
+          "role": "quality",
+          "inputFields": [
+            {
+              "id": "feedback",
+              "label": "客户反馈",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "resolution",
+            "evidence",
+            "feedback"
+          ]
+        }
+      ]
+    }
+  },
+  "design": {
+    "facts": [
+      "当前示例只演示设备服务案例、资产关联和状态闭环。"
+    ],
+    "assumptions": [
+      "所有人员、客户、设备、活动和案例均为合成记录。",
+      "真实派工系统、身份权限、通知通道和服务SLA尚未提供。"
+    ],
+    "implementation": [
+      "阶段一：验证本地服务闭环、数据关系与领域导航。",
+      "阶段二：确认客户权威系统、服务规则和授权后评估接入。"
+    ],
+    "coverage": [
+      {
+        "id": "case-linked",
+        "claim": "服务案例可关联设备并跨领域追溯活动",
+        "status": "simulated",
+        "evidence": "合成 cases/assets/touchpoints 通过关系键连接。"
+      },
+      {
+        "id": "simulated-handoff",
+        "claim": "受理交接可产生可回读演示状态",
+        "status": "unverified",
+        "evidence": "待按 Playbook 执行并回读操作回执。"
+      }
+    ]
+  },
+  "pages": [
+    {
+      "id": "intake",
+      "title": "服务受理",
+      "goal": "识别客户和设备，分类案例并模拟服务交接。",
+      "datasets": [
+        "cases",
+        "customers",
+        "assets"
+      ],
+      "metrics": [
+        "new_cases"
+      ],
+      "actions": [
+        "triage",
+        "dispatch",
+        "request_more"
+      ],
+      "components": [
+        "metrics",
+        "records",
+        "workflow",
+        "assistant"
+      ],
+      "claimIds": [
+        "case-linked",
+        "simulated-handoff"
+      ],
+      "links": [
+        {
+          "label": "跟进此服务案例",
+          "pageId": "fulfillment",
+          "dataset": "cases",
+          "recordId": "SR-204"
+        }
+      ]
+    },
+    {
+      "id": "fulfillment",
+      "title": "履约跟进",
+      "goal": "追踪处理中的服务案例、关联活动、验证证据和结果。",
+      "datasets": [
+        "cases",
+        "assets",
+        "touchpoints"
+      ],
+      "metrics": [
+        "open_cases",
+        "service_activities",
+        "closure_rate"
+      ],
+      "actions": [
+        "resolve",
+        "close"
+      ],
+      "components": [
+        "metrics",
+        "records",
+        "workflow",
+        "assistant"
+      ],
+      "claimIds": [
+        "case-linked",
+        "simulated-handoff"
+      ],
+      "links": [
+        {
+          "label": "返回服务受理",
+          "pageId": "intake",
+          "dataset": "cases",
+          "recordId": "SR-204"
+        }
+      ]
+    }
+  ],
+  "blueprint": {
+    "objectives": [
+      {
+        "id": "case-continuity",
+        "title": "同一服务案例贯穿受理与履约",
+        "measure": "案例 ID 在两个领域一致且能打开服务活动"
+      },
+      {
+        "id": "visible-outcome",
+        "title": "处理结果可被核对",
+        "measure": "操作回执、状态、证据与服务活动可查看"
+      }
+    ],
+    "sources": [
+      {
+        "id": "synthetic-service-records",
+        "title": "合成服务样例",
+        "kind": "assumption",
+        "finding": "构造的测试记录展示数据结构，不代表现实客户和服务表现。",
+        "status": "hypothesis"
+      }
+    ],
+    "journey": [
+      {
+        "id": "service-intake",
+        "title": "受理与分类",
+        "role": "coordinator",
+        "description": "核对案例、客户和设备，再模拟交接。",
+        "domainId": "intake",
+        "next": [
+          "service-fulfillment"
+        ]
+      },
+      {
+        "id": "service-fulfillment",
+        "title": "执行与验证",
+        "role": "technician",
+        "description": "查看服务活动，记录处理结果和验证证据。",
+        "domainId": "fulfillment",
+        "next": [
+          "service-feedback"
+        ]
+      },
+      {
+        "id": "service-feedback",
+        "title": "反馈与关闭",
+        "role": "quality",
+        "description": "读取处理证据、记录反馈并检查领域指标。",
+        "domainId": "fulfillment"
+      }
+    ],
+    "systems": [
+      {
+        "id": "demo-ledger",
+        "name": "浏览器演示状态",
+        "responsibility": "临时保存已确认的模拟服务事件。",
+        "status": "simulated"
+      },
+      {
+        "id": "dispatch-backend",
+        "name": "真实派工/服务平台",
+        "responsibility": "未来可能的权威服务状态及通知来源。",
+        "status": "planned"
+      }
+    ],
+    "dataNotes": [
+      "所有记录为固定样例且彼此通过 customer_id、asset_id、case_id 关联。",
+      "模拟完成率不代表服务目标、SLA或真实业务改善。"
+    ],
+    "phases": [
+      {
+        "id": "validate-demo",
+        "title": "方案 Demo 验证",
+        "description": "核对两个领域间同一案例的转交和回读。"
+      },
+      {
+        "id": "discover-integration",
+        "title": "真实系统调研",
+        "description": "明确客户系统接口、身份、事件与SLA授权后另行设计。"
+      }
+    ]
+  }
+}

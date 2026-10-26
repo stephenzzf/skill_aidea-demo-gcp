@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtemp,mkdir,writeFile,readFile,rm,symlink} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {resolve} from 'node:path';
+import {createHash} from 'node:crypto';
+import {readReuse,applyReuse} from './reuse.mjs';
+const hash=x=>createHash('sha256').update(x).digest('hex');
+async function fixture(t){const root=await mkdtemp(resolve(tmpdir(),'me-extension-'));t.after(()=>rm(root,{recursive:true,force:true}));const source=resolve(root,'source'),target=resolve(root,'target');await mkdir(source);await mkdir(target);await writeFile(resolve(source,'package-lock.json'),'{}');await writeFile(resolve(target,'package-lock.json'),'{}');const files=[];for(const path of ['client/demo-extension.tsx','server/demo-extension.ts','shared/extensions/sample.ts']){await mkdir(resolve(source,path,'..'),{recursive:true});const code='export const value=1;\n';await writeFile(resolve(source,path),code);files.push({path,sha256:hash(code)});}const manifest={version:1,apiVersion:1,id:'fixture',dependencyDigest:hash('{}'),files};const save=()=>writeFile(resolve(source,'extension-manifest.json'),JSON.stringify(manifest));await save();return {root,source,target,manifest,save};}
+test('declared extension modules copy byte-for-byte without touching core files',async t=>{const f=await fixture(t);await mkdir(resolve(f.target,'server'));await writeFile(resolve(f.target,'server/app.ts'),'preserve-core');const copied=await applyReuse(await readReuse(f.source),f.target);assert.equal(copied.id,'fixture');assert.equal(await readFile(resolve(f.target,'server/app.ts'),'utf8'),'preserve-core');for(const item of f.manifest.files)assert.equal(hash(await readFile(resolve(f.target,item.path))),item.sha256);});
+test('core overrides, traversal, symlinks, stale source, unknown API and incompatible dependencies reject',async t=>{
+ for(const kind of ['core','helper','traversal','symlink','stale','version','lock']){const f=await fixture(t);if(kind==='core')f.manifest.files.push({path:'server/app.ts',sha256:'bad'});if(kind==='helper')f.manifest.files.push({path:'shared/extensions/context.ts',sha256:'bad'});if(kind==='traversal')f.manifest.files.push({path:'shared/extensions/../secret.ts',sha256:'bad'});if(kind==='symlink'){await symlink(resolve(f.source,'package-lock.json'),resolve(f.source,'shared/extensions/link.ts'));f.manifest.files.push({path:'shared/extensions/link.ts',sha256:hash('{}')});}if(kind==='stale')await writeFile(resolve(f.source,f.manifest.files[0].path),'changed');if(kind==='version')f.manifest.apiVersion=2;if(kind==='lock')f.manifest.dependencyDigest='wrong';await f.save();await assert.rejects(readReuse(f.source));}
+ const f=await fixture(t);await writeFile(resolve(f.target,'package-lock.json'),'different');await assert.rejects(applyReuse(await readReuse(f.source),f.target),/依赖锁/);
+});

@@ -1,0 +1,23 @@
+# Runtime dependencies, builds and private data must not be published.
+**/node_modules/
+**/dist/
+**/evidence/
+**/coverage/
+**/__pycache__/
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+*.pem
+*.key
+*credentials*.json
+application_default_credentials.json
+*.log
+*.log.*
+*.pid
+*.zip
+*.tgz
+*.tar.gz
+.DS_Store

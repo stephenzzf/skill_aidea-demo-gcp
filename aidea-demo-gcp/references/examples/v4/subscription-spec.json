@@ -1,0 +1,750 @@
+{
+  "version": 4,
+  "confirmed": true,
+  "id": "subscription-operations-v4",
+  "workspace": {
+    "views": [
+      "overview",
+      "records",
+      "workflow",
+      "assistant"
+    ],
+    "roles": [
+      {
+        "id": "analyst",
+        "label": "数据分析"
+      },
+      {
+        "id": "operator",
+        "label": "运营处理"
+      }
+    ],
+    "stages": [
+      {
+        "id": "open",
+        "label": "待处理"
+      },
+      {
+        "id": "ready",
+        "label": "已准备"
+      },
+      {
+        "id": "closed",
+        "label": "已关闭"
+      }
+    ],
+    "datasets": [
+      {
+        "id": "plans",
+        "label": "套餐目录",
+        "key": "id",
+        "origin": "synthetic",
+        "source": "固定种子2006合成样本，非客户经营记录",
+        "fields": [
+          {
+            "id": "id",
+            "label": "套餐ID",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "name",
+            "label": "套餐名称",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "relations": []
+      },
+      {
+        "id": "codes",
+        "label": "地区套餐编码",
+        "key": "id",
+        "origin": "synthetic",
+        "source": "固定种子2006合成样本，非客户经营记录",
+        "fields": [
+          {
+            "id": "id",
+            "label": "编码ID",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "local_code",
+            "label": "地区编码",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "plan_id",
+            "label": "统一套餐ID",
+            "type": "string",
+            "required": false
+          },
+          {
+            "id": "verification",
+            "label": "核实状态",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "evidence",
+            "label": "核实依据",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "relations": [
+          {
+            "field": "plan_id",
+            "dataset": "plans",
+            "target": "id"
+          }
+        ]
+      },
+      {
+        "id": "charges",
+        "label": "订阅账单行",
+        "key": "id",
+        "origin": "synthetic",
+        "source": "固定种子2006合成样本，非客户经营记录",
+        "fields": [
+          {
+            "id": "id",
+            "label": "账单行ID",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "order_id",
+            "label": "订单编号",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "code_id",
+            "label": "套餐编码",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "market",
+            "label": "经营地区",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "currency",
+            "label": "原币代码",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "amount",
+            "label": "商品实付金额",
+            "type": "number",
+            "required": true
+          },
+          {
+            "id": "day",
+            "label": "业务日期",
+            "type": "date",
+            "required": true
+          },
+          {
+            "id": "status",
+            "label": "支付状态",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "relations": [
+          {
+            "field": "code_id",
+            "dataset": "codes",
+            "target": "id"
+          }
+        ]
+      },
+      {
+        "id": "items",
+        "label": "运营事项",
+        "key": "id",
+        "origin": "synthetic",
+        "source": "固定种子2006合成样本，非客户经营记录",
+        "fields": [
+          {
+            "id": "id",
+            "label": "事项编号",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "source_code",
+            "label": "关联地区编码",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "title",
+            "label": "行动标题",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "owner",
+            "label": "负责人",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "day",
+            "label": "登记日期",
+            "type": "date",
+            "required": true
+          },
+          {
+            "id": "evidence",
+            "label": "处理依据",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "result",
+            "label": "处理结果",
+            "type": "string",
+            "required": false
+          },
+          {
+            "id": "status",
+            "label": "处理阶段",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "stale",
+            "label": "待重评",
+            "type": "boolean",
+            "required": true
+          }
+        ],
+        "relations": [
+          {
+            "field": "source_code",
+            "dataset": "codes",
+            "target": "id"
+          }
+        ]
+      }
+    ],
+    "metrics": [
+      {
+        "id": "paid_value",
+        "label": "订阅实付金额",
+        "dataset": "charges",
+        "operation": "sum",
+        "description": "当前已支付合成账单行金额，按原币分别计算，不含真实财务结论。",
+        "scope": "current",
+        "field": "amount",
+        "filters": [
+          {
+            "field": "status",
+            "op": "eq",
+            "value": "paid"
+          }
+        ],
+        "groupBy": "market",
+        "timeField": "day"
+      },
+      {
+        "id": "mapped_value",
+        "label": "套餐A已归类金额",
+        "dataset": "charges",
+        "operation": "sum",
+        "description": "关联到套餐A的已支付合成账单；映射变化只重新分类。",
+        "scope": "current",
+        "field": "amount",
+        "filters": [
+          {
+            "field": "status",
+            "op": "eq",
+            "value": "paid"
+          },
+          {
+            "field": "plan_id",
+            "op": "eq",
+            "value": "plans-1",
+            "dataset": "codes"
+          }
+        ],
+        "groupBy": "market",
+        "timeField": "day"
+      },
+      {
+        "id": "closed_items",
+        "label": "已关闭事项",
+        "dataset": "items",
+        "operation": "count",
+        "description": "本次模拟处理的工作项数量，不代表经营效果。",
+        "scope": "current",
+        "filters": [
+          {
+            "field": "status",
+            "op": "eq",
+            "value": "closed"
+          }
+        ]
+      }
+    ],
+    "workflow": {
+      "dataset": "items",
+      "statusField": "status",
+      "staleField": "stale",
+      "editableFields": [
+        "evidence",
+        "result"
+      ],
+      "transitions": [
+        {
+          "id": "prepare",
+          "label": "准备运营行动",
+          "from": [
+            "open"
+          ],
+          "to": "ready",
+          "role": "operator",
+          "inputFields": [
+            {
+              "id": "evidence",
+              "label": "行动依据",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "evidence"
+          ]
+        },
+        {
+          "id": "reassess",
+          "label": "重新评估依据",
+          "from": [
+            "ready"
+          ],
+          "to": "ready",
+          "role": "operator",
+          "inputFields": [
+            {
+              "id": "evidence",
+              "label": "复评依据",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "evidence"
+          ],
+          "clearsStale": true
+        },
+        {
+          "id": "finish",
+          "label": "记录结果并关闭",
+          "from": [
+            "ready"
+          ],
+          "to": "closed",
+          "role": "operator",
+          "inputFields": [
+            {
+              "id": "result",
+              "label": "处理结果",
+              "type": "string",
+              "required": true
+            },
+            {
+              "id": "evidence",
+              "label": "结果依据",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "result",
+            "evidence"
+          ],
+          "requireFresh": true
+        }
+      ]
+    }
+  },
+  "design": {
+    "facts": [
+      "已确认采用完整方案与交互验证，启用AI问答。"
+    ],
+    "assumptions": [
+      "全部业务数据为合成样本，无真实系统连接。"
+    ],
+    "implementation": [
+      "先验证本地分析与事项闭环。",
+      "取得数据与权限后另行评估真实接入。"
+    ],
+    "coverage": [
+      {
+        "id": "analysis",
+        "claim": "原币分析及来源可追溯",
+        "status": "simulated",
+        "evidence": "合成账单数据与已配置指标"
+      },
+      {
+        "id": "review",
+        "claim": "编码核实后可回读派生归类",
+        "status": "simulated",
+        "evidence": "配置的mapping-review能力"
+      },
+      {
+        "id": "actions",
+        "claim": "建立行动、复评和结果关闭",
+        "status": "simulated",
+        "evidence": "work-items能力与现有workflow"
+      },
+      {
+        "id": "live",
+        "claim": "真实系统接入及经营效果验证",
+        "status": "planned",
+        "evidence": "尚无授权真实数据"
+      }
+    ]
+  },
+  "blueprint": {
+    "objectives": [
+      {
+        "id": "trace",
+        "title": "统一口径并追溯记录",
+        "measure": "指标可回读至相同原币与筛选明细。"
+      },
+      {
+        "id": "loop",
+        "title": "核实映射与行动结果",
+        "measure": "映射只改变分类，原币总额保持；旧依据待重评。"
+      }
+    ],
+    "sources": [
+      {
+        "id": "seed",
+        "title": "固定种子合成数据",
+        "kind": "assumption",
+        "finding": "所有账单、套餐和行动均为演示样本。",
+        "status": "hypothesis"
+      }
+    ],
+    "journey": [
+      {
+        "id": "observe",
+        "title": "查看原币经营",
+        "role": "analyst",
+        "description": "筛选业务记录并追溯来源。",
+        "domainId": "insights",
+        "next": [
+          "review"
+        ]
+      },
+      {
+        "id": "review",
+        "title": "核实与处理",
+        "role": "operator",
+        "description": "记录依据，复核套餐并处理模拟行动。",
+        "domainId": "operations"
+      }
+    ],
+    "systems": [
+      {
+        "id": "demo",
+        "name": "本地合成数据",
+        "responsibility": "为确定性分析与事项提供数据。",
+        "status": "simulated"
+      },
+      {
+        "id": "live",
+        "name": "客户授权系统",
+        "responsibility": "后续提供真实数据与权限。",
+        "status": "planned"
+      }
+    ],
+    "dataNotes": [
+      "所有金额按原币分开。",
+      "没有会话级订单关联，不计算转化率或ROI。",
+      "说明外壳中文；客户体验源文语言由experienceLocale配置。"
+    ],
+    "phases": [
+      {
+        "id": "local",
+        "title": "本地方案验证",
+        "description": "验证分析、映射与事项闭环。"
+      },
+      {
+        "id": "connect",
+        "title": "授权后接入",
+        "description": "另行确认系统权限、持久化与效果基线。"
+      }
+    ]
+  },
+  "pages": [
+    {
+      "id": "insights",
+      "title": "订阅经营看板",
+      "goal": "按原币查看账单并追溯套餐编码。",
+      "datasets": [
+        "charges",
+        "codes",
+        "plans"
+      ],
+      "metrics": [
+        "paid_value",
+        "mapped_value"
+      ],
+      "actions": [],
+      "components": [
+        "metrics",
+        "records",
+        "assistant"
+      ],
+      "claimIds": [
+        "analysis",
+        "review"
+      ],
+      "links": [
+        {
+          "label": "进入数据核实与行动",
+          "pageId": "operations"
+        }
+      ]
+    },
+    {
+      "id": "operations",
+      "title": "核实与运营",
+      "goal": "核对套餐编码，建立行动并记录复评与结果。",
+      "datasets": [
+        "codes",
+        "plans",
+        "items",
+        "charges"
+      ],
+      "metrics": [
+        "closed_items"
+      ],
+      "actions": [
+        "prepare",
+        "reassess",
+        "finish"
+      ],
+      "components": [
+        "metrics",
+        "records",
+        "workflow",
+        "assistant"
+      ],
+      "claimIds": [
+        "review",
+        "actions"
+      ],
+      "links": [
+        {
+          "label": "回看订阅经营",
+          "pageId": "insights"
+        }
+      ]
+    }
+  ],
+  "customer": "Harbor Cloud",
+  "assistantName": "订阅经营助手",
+  "title": "订阅经营与数据核实",
+  "subtitle": "从多地区原币分析到套餐编码核实及运营行动。",
+  "audience": "订阅经营分析人员、数据核实人员、运营负责人",
+  "goal": "按原币追溯订阅样本，通过套餐编码复核与行动回执验证方案。",
+  "solution": "使用合成账单、套餐目录与运营工作项，演示同口径筛选、来源下钻、映射核实和依据变化后的复评；不宣称真实收入提升。",
+  "prompts": [
+    "请解释当前原币账单金额与来源。",
+    "为什么映射修正不是收入增长？"
+  ],
+  "acceptance": [
+    "原币不混合",
+    "映射与工作项只通过已注册能力执行",
+    "状态与问答使用同一派生数据"
+  ],
+  "steps": [
+    {
+      "id": "see",
+      "question": "查看订阅实付金额并点击EUR卡片下钻。",
+      "expected": "EUR/GBP/SGD分开；EUR来源为charges-1与charges-4。",
+      "role": "analyst",
+      "pageId": "insights",
+      "preconditions": [
+        "全新合成状态。"
+      ],
+      "inputs": [
+        "EUR卡片；之后清除筛选"
+      ],
+      "observation": "EUR104.25、GBP69.12、SGD98.67，无跨币种合计。",
+      "claimIds": [
+        "analysis"
+      ]
+    },
+    {
+      "id": "create-item",
+      "question": "在核实与运营建立一个关联codes-1的模拟运营事项。",
+      "expected": "新增NEW-主键的open事项，页面显示模拟回执。",
+      "role": "operator",
+      "pageId": "operations",
+      "preconditions": [
+        "保留新事项主键，以便继续同一流程。"
+      ],
+      "inputs": [
+        "关联地区编码codes-1；标题：核对套餐归类；负责人：演示运营员；处理依据：合成目录待核实"
+      ],
+      "observation": "只新增本次模拟事项，未外发任务。",
+      "claimIds": [
+        "actions"
+      ]
+    },
+    {
+      "id": "prepare-item",
+      "question": "在处理流程选择新建事项，执行准备运营行动。",
+      "expected": "open→ready，准备依据可回读。",
+      "role": "operator",
+      "pageId": "operations",
+      "preconditions": [
+        "演示视角为运营处理。"
+      ],
+      "inputs": [
+        "行动依据：已整理待核实目录"
+      ],
+      "observation": "后续映射变化前的旧建议不会被当作最终结果。",
+      "claimIds": [
+        "actions"
+      ]
+    },
+    {
+      "id": "review-code",
+      "question": "核实codes-1映射到plans-1并留存依据。",
+      "expected": "套餐A归类得到EUR11.21；原币实付总额不变，关联事项stale=true。",
+      "role": "operator",
+      "pageId": "operations",
+      "preconditions": [
+        "新事项已准备；codes-1尚未确认。"
+      ],
+      "inputs": [
+        "关联目标plans-1；核实依据：合成套餐目录对照确认"
+      ],
+      "observation": "原始scenario保持不变；跨Tab回读归类；旧建议需重新评估。",
+      "claimIds": [
+        "review",
+        "analysis",
+        "actions"
+      ]
+    },
+    {
+      "id": "reassess-item",
+      "question": "回到处理流程，在同一事项重新评估依据。",
+      "expected": "ready保持，stale清除；不经过复评的直接关闭应拒绝。",
+      "role": "operator",
+      "pageId": "operations",
+      "preconditions": [
+        "映射已改变，旧事项提示需重评。"
+      ],
+      "inputs": [
+        "复评依据：已核对codes-1到plans-1，按新归类评估"
+      ],
+      "observation": "失败操作不追加成功事件；复评成功有回执。",
+      "claimIds": [
+        "actions"
+      ]
+    },
+    {
+      "id": "finish-item",
+      "question": "执行记录结果并关闭，再回看经营概览。",
+      "expected": "ready→closed，已关闭事项从0变为1。",
+      "role": "operator",
+      "pageId": "operations",
+      "preconditions": [
+        "同一事项已复评。"
+      ],
+      "inputs": [
+        "处理结果：已完成合成目录归类核实；结果依据：复评记录B"
+      ],
+      "observation": "关闭数量变化，历史经营效果不被伪造，原币金额不变。",
+      "claimIds": [
+        "actions",
+        "analysis"
+      ]
+    }
+  ],
+  "model": {
+    "project": "",
+    "location": "",
+    "model": ""
+  },
+  "capabilities": [
+    {
+      "id": "money",
+      "version": 1,
+      "label": "原币账单",
+      "pages": [
+        "insights",
+        "operations"
+      ],
+      "kind": "partitioned-analysis",
+      "dataset": "charges",
+      "currencyField": "currency"
+    },
+    {
+      "id": "plan-review",
+      "version": 1,
+      "label": "核实套餐编码",
+      "pages": [
+        "operations"
+      ],
+      "kind": "mapping-review",
+      "role": "operator",
+      "dataset": "codes",
+      "targetField": "plan_id",
+      "targetDataset": "plans",
+      "evidenceField": "evidence",
+      "statusField": "verification",
+      "resolvedStatus": "confirmed"
+    },
+    {
+      "id": "action-create",
+      "version": 1,
+      "label": "建立运营事项",
+      "pages": [
+        "operations"
+      ],
+      "kind": "work-items",
+      "role": "operator",
+      "dataset": "items",
+      "inputFields": [
+        "source_code",
+        "title",
+        "owner",
+        "evidence"
+      ],
+      "defaults": {
+        "day": "2026-01-01",
+        "status": "open",
+        "stale": false
+      }
+    }
+  ],
+  "presentation": {
+    "shellLocale": "zh-CN",
+    "experienceLocale": "de",
+    "brand": {
+      "primaryColor": "#7750A0"
+    },
+    "workspaceLayout": "split"
+  },
+  "execution": {
+    "model": "simulated",
+    "data": "local"
+  }
+}

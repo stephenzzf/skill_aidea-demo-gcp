@@ -1,0 +1,222 @@
+{
+  "synthetic": true,
+  "instruction": "固定种子2006的合成演示数据，不代表客户真实业务。引用确定性分析，区分观察与建议；模拟动作不证明经营提升。",
+  "topics": [],
+  "version": 2,
+  "workspace": {
+    "datasets": [
+      {
+        "id": "cases",
+        "rows": [
+          {
+            "id": "cases-1",
+            "status": "new",
+            "day": "2026-01-01",
+            "customer_id": "customers-1",
+            "asset_id": "assets-1",
+            "issue": "问题摘要样例1",
+            "severity": "影响级别样例1",
+            "resolution": "处理结果样例1",
+            "evidence": "验证证据样例1",
+            "feedback": "客户反馈样例1",
+            "stale": false,
+            "owner": "责任人样例1"
+          },
+          {
+            "id": "cases-2",
+            "status": "new",
+            "day": "2026-01-01",
+            "customer_id": "customers-2",
+            "asset_id": "assets-2",
+            "issue": "问题摘要样例2",
+            "severity": "影响级别样例2",
+            "resolution": "处理结果样例2",
+            "evidence": "验证证据样例2",
+            "feedback": "客户反馈样例2",
+            "stale": false,
+            "owner": "责任人样例2"
+          },
+          {
+            "id": "cases-3",
+            "status": "new",
+            "day": "2026-01-01",
+            "customer_id": "customers-3",
+            "asset_id": "assets-3",
+            "issue": "问题摘要样例3",
+            "severity": "影响级别样例3",
+            "resolution": "处理结果样例3",
+            "evidence": "验证证据样例3",
+            "feedback": "客户反馈样例3",
+            "stale": false,
+            "owner": "责任人样例3"
+          },
+          {
+            "id": "cases-4",
+            "status": "new",
+            "day": "2026-01-01",
+            "customer_id": "customers-4",
+            "asset_id": "assets-4",
+            "issue": "问题摘要样例4",
+            "severity": "影响级别样例4",
+            "resolution": "处理结果样例4",
+            "evidence": "验证证据样例4",
+            "feedback": "客户反馈样例4",
+            "stale": false,
+            "owner": "责任人样例4"
+          },
+          {
+            "id": "cases-5",
+            "status": "new",
+            "day": "2026-01-01",
+            "customer_id": "customers-5",
+            "asset_id": "assets-5",
+            "issue": "问题摘要样例5",
+            "severity": "影响级别样例5",
+            "resolution": "处理结果样例5",
+            "evidence": "验证证据样例5",
+            "feedback": "客户反馈样例5",
+            "stale": false,
+            "owner": "责任人样例5"
+          },
+          {
+            "id": "cases-6",
+            "status": "new",
+            "day": "2026-01-01",
+            "customer_id": "customers-6",
+            "asset_id": "assets-6",
+            "issue": "问题摘要样例6",
+            "severity": "影响级别样例6",
+            "resolution": "处理结果样例6",
+            "evidence": "验证证据样例6",
+            "feedback": "客户反馈样例6",
+            "stale": false,
+            "owner": "责任人样例6"
+          }
+        ]
+      },
+      {
+        "id": "customers",
+        "rows": [
+          {
+            "id": "customers-1",
+            "name": "演示客户名称样例1",
+            "region": "服务地区样例1"
+          },
+          {
+            "id": "customers-2",
+            "name": "演示客户名称样例2",
+            "region": "服务地区样例2"
+          },
+          {
+            "id": "customers-3",
+            "name": "演示客户名称样例3",
+            "region": "服务地区样例3"
+          },
+          {
+            "id": "customers-4",
+            "name": "演示客户名称样例4",
+            "region": "服务地区样例4"
+          },
+          {
+            "id": "customers-5",
+            "name": "演示客户名称样例5",
+            "region": "服务地区样例5"
+          },
+          {
+            "id": "customers-6",
+            "name": "演示客户名称样例6",
+            "region": "服务地区样例6"
+          }
+        ]
+      },
+      {
+        "id": "assets",
+        "rows": [
+          {
+            "id": "assets-1",
+            "type": "设备类型样例1",
+            "model": "型号样例1",
+            "installed": "2026-01-01"
+          },
+          {
+            "id": "assets-2",
+            "type": "设备类型样例2",
+            "model": "型号样例2",
+            "installed": "2026-01-02"
+          },
+          {
+            "id": "assets-3",
+            "type": "设备类型样例3",
+            "model": "型号样例3",
+            "installed": "2026-01-03"
+          },
+          {
+            "id": "assets-4",
+            "type": "设备类型样例4",
+            "model": "型号样例4",
+            "installed": "2026-01-04"
+          },
+          {
+            "id": "assets-5",
+            "type": "设备类型样例5",
+            "model": "型号样例5",
+            "installed": "2026-01-05"
+          },
+          {
+            "id": "assets-6",
+            "type": "设备类型样例6",
+            "model": "型号样例6",
+            "installed": "2026-01-06"
+          }
+        ]
+      },
+      {
+        "id": "touchpoints",
+        "rows": [
+          {
+            "id": "touchpoints-1",
+            "case_id": "cases-1",
+            "day": "2026-01-01",
+            "activity": "服务活动样例1",
+            "note": "活动说明样例1"
+          },
+          {
+            "id": "touchpoints-2",
+            "case_id": "cases-2",
+            "day": "2026-01-02",
+            "activity": "服务活动样例2",
+            "note": "活动说明样例2"
+          },
+          {
+            "id": "touchpoints-3",
+            "case_id": "cases-3",
+            "day": "2026-01-03",
+            "activity": "服务活动样例3",
+            "note": "活动说明样例3"
+          },
+          {
+            "id": "touchpoints-4",
+            "case_id": "cases-4",
+            "day": "2026-01-04",
+            "activity": "服务活动样例4",
+            "note": "活动说明样例4"
+          },
+          {
+            "id": "touchpoints-5",
+            "case_id": "cases-5",
+            "day": "2026-01-05",
+            "activity": "服务活动样例5",
+            "note": "活动说明样例5"
+          },
+          {
+            "id": "touchpoints-6",
+            "case_id": "cases-6",
+            "day": "2026-01-06",
+            "activity": "服务活动样例6",
+            "note": "活动说明样例6"
+          }
+        ]
+      }
+    ]
+  }
+}

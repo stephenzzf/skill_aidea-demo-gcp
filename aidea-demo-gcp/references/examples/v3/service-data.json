@@ -1,0 +1,137 @@
+{
+  "version": 2,
+  "synthetic": true,
+  "instruction": "仅基于固定种子服务案例和当前确定性数据作答。客户、设备、服务活动均为虚构内容，不代表客户实际服务质量。模拟派工、处理结果和关闭不会向任何系统发送通知或创建生产记录。",
+  "topics": [
+    {
+      "id": "service-boundary",
+      "title": "服务演示边界",
+      "domainIds": [
+        "intake",
+        "fulfillment"
+      ],
+      "keywords": [
+        "服务案例",
+        "流程",
+        "系统"
+      ],
+      "answer": "本演示通过合成案例展示受理、交接、结果核对和反馈。真实派工系统及服务 SLA 尚待客户确认。",
+      "rows": [
+        [
+          "数据",
+          "合成服务案例、设备和活动"
+        ]
+      ],
+      "source": "演示配置",
+      "followups": [
+        "请查看各领域的当前案例和活动。"
+      ]
+    }
+  ],
+  "workspace": {
+    "datasets": [
+      {
+        "id": "cases",
+        "rows": [
+          {
+            "id": "SR-204",
+            "status": "new",
+            "day": "2026-10-22",
+            "customer_id": "C-010",
+            "asset_id": "AS-802",
+            "issue": "设备间歇性无法启动",
+            "severity": "high",
+            "resolution": "",
+            "evidence": "",
+            "feedback": "",
+            "stale": false
+          },
+          {
+            "id": "SR-205",
+            "status": "working",
+            "day": "2026-10-23",
+            "customer_id": "C-011",
+            "asset_id": "AS-803",
+            "issue": "运行中出现异常噪声",
+            "severity": "medium",
+            "resolution": "",
+            "evidence": "",
+            "feedback": "",
+            "stale": false
+          },
+          {
+            "id": "SR-206",
+            "status": "resolved",
+            "day": "2026-10-24",
+            "customer_id": "C-010",
+            "asset_id": "AS-802",
+            "issue": "定期检查并清洁传感器",
+            "severity": "low",
+            "resolution": "演示记录：完成清洁",
+            "evidence": "演示记录：复测正常",
+            "feedback": "",
+            "stale": false
+          }
+        ]
+      },
+      {
+        "id": "customers",
+        "rows": [
+          {
+            "id": "C-010",
+            "name": "示例制造 A",
+            "region": "中国华东"
+          },
+          {
+            "id": "C-011",
+            "name": "示例制造 B",
+            "region": "中国华南"
+          }
+        ]
+      },
+      {
+        "id": "assets",
+        "rows": [
+          {
+            "id": "AS-802",
+            "type": "数控设备",
+            "model": "MX-240",
+            "installed": "2024-05-16"
+          },
+          {
+            "id": "AS-803",
+            "type": "检测设备",
+            "model": "QA-80",
+            "installed": "2023-11-02"
+          }
+        ]
+      },
+      {
+        "id": "touchpoints",
+        "rows": [
+          {
+            "id": "ACT-501",
+            "case_id": "SR-204",
+            "day": "2026-10-22",
+            "activity": "受理",
+            "note": "初始登记，仅为模拟内容。"
+          },
+          {
+            "id": "ACT-502",
+            "case_id": "SR-205",
+            "day": "2026-10-23",
+            "activity": "远程诊断",
+            "note": "等待现场核实，仅为模拟内容。"
+          },
+          {
+            "id": "ACT-503",
+            "case_id": "SR-206",
+            "day": "2026-10-24",
+            "activity": "结果验证",
+            "note": "记录与案例关系，仅为模拟内容。"
+          }
+        ]
+      }
+    ]
+  }
+}

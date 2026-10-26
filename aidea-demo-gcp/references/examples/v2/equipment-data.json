@@ -1,0 +1,154 @@
+{
+  "version": 2,
+  "synthetic": true,
+  "instruction": "本演示器材是合成业务对象，不是示例器材品牌真实SKU。不能把演示价格、重量、快拆路线当成官网事实；真实参数和兼容性待核实。持续澄清需求，不预设顾客已有QR-A。",
+  "topics": [
+    {
+      "id": "needs",
+      "title": "选购澄清",
+      "keywords": [
+        "旅行",
+        "预算",
+        "设备"
+      ],
+      "answer": "先确认设备、预算与币种、地区、拍摄方式和现有板座型号，再比较候选；资料不足时明确待核实。",
+      "rows": [
+        [
+          "业务终点",
+          "咨询与服务结果，不是购买成功"
+        ]
+      ],
+      "source": "合成演示方法说明",
+      "followups": [
+        "有哪些适配信息需要核实？"
+      ]
+    },
+    {
+      "id": "analysis",
+      "title": "运营反馈",
+      "keywords": [
+        "看板",
+        "待核实"
+      ],
+      "answer": "待核实与待交接数来自当前案例状态；咨询完成率不代表成交率。",
+      "rows": [
+        [
+          "数据边界",
+          "本地合成业务状态"
+        ]
+      ],
+      "source": "演示指标口径",
+      "followups": []
+    }
+  ],
+  "workspace": {
+    "datasets": [
+      {
+        "id": "cases",
+        "rows": [
+          {
+            "id": "UL-DEMO-001",
+            "status": "needs",
+            "day": "2026-10-19",
+            "requirements": "",
+            "candidate": null,
+            "issue": "",
+            "evidence": "",
+            "response": "",
+            "feedback": "",
+            "stale": false
+          },
+          {
+            "id": "UL-DEMO-002",
+            "status": "verify",
+            "day": "2026-10-20",
+            "requirements": "旅行拍摄；设备与具体快拆板型号待顾客确认",
+            "candidate": "P01",
+            "issue": "需确认具体板座适配",
+            "evidence": "",
+            "response": "",
+            "feedback": "",
+            "stale": false
+          },
+          {
+            "id": "UL-DEMO-003",
+            "status": "processing",
+            "day": "2026-10-21",
+            "requirements": "旅行拍摄；设备与具体快拆板型号待顾客确认",
+            "candidate": "P01",
+            "issue": "需确认具体板座适配",
+            "evidence": "",
+            "response": "",
+            "feedback": "",
+            "stale": false
+          },
+          {
+            "id": "UL-DEMO-004",
+            "status": "closed",
+            "day": "2026-10-22",
+            "requirements": "旅行拍摄；设备与具体快拆板型号待顾客确认",
+            "candidate": "P01",
+            "issue": "需确认具体板座适配",
+            "evidence": "合成核实说明 SIM-E01",
+            "response": "咨询建议已说明，未执行购买",
+            "feedback": "补充适配资料",
+            "stale": false
+          },
+          {
+            "id": "UL-DEMO-005",
+            "status": "selected",
+            "day": "2026-10-23",
+            "requirements": "旅行拍摄；设备与具体快拆板型号待顾客确认",
+            "candidate": "P01",
+            "issue": "需确认具体板座适配",
+            "evidence": "",
+            "response": "",
+            "feedback": "",
+            "stale": false
+          },
+          {
+            "id": "UL-DEMO-006",
+            "status": "handoff",
+            "day": "2026-10-24",
+            "requirements": "旅行拍摄；设备与具体快拆板型号待顾客确认",
+            "candidate": "P01",
+            "issue": "需确认具体板座适配",
+            "evidence": "",
+            "response": "",
+            "feedback": "",
+            "stale": false
+          }
+        ]
+      },
+      {
+        "id": "products",
+        "rows": [
+          {
+            "id": "P01",
+            "name": "旅行轻量方案 A",
+            "system": "Arca",
+            "price": 699,
+            "weight": 1.1,
+            "note": "仅为合成候选；真实SKU、板座适配及政策须核实"
+          },
+          {
+            "id": "P02",
+            "name": "旅行轻量方案 B",
+            "system": "QR-A",
+            "price": 899,
+            "weight": 1.3,
+            "note": "仅为合成候选；真实SKU、板座适配及政策须核实"
+          },
+          {
+            "id": "P03",
+            "name": "桌面创作方案 C",
+            "system": "待核实",
+            "price": 399,
+            "weight": 0.7,
+            "note": "仅为合成候选；真实SKU、板座适配及政策须核实"
+          }
+        ]
+      }
+    ]
+  }
+}

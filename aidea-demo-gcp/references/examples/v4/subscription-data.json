@@ -1,0 +1,222 @@
+{
+  "synthetic": true,
+  "instruction": "固定种子2006的合成演示数据，不代表客户真实业务。引用确定性分析，区分观察与建议；模拟动作不证明经营提升。",
+  "topics": [],
+  "version": 2,
+  "workspace": {
+    "datasets": [
+      {
+        "id": "plans",
+        "rows": [
+          {
+            "id": "plans-1",
+            "name": "基础订阅（合成1）"
+          },
+          {
+            "id": "plans-2",
+            "name": "团队订阅（合成2）"
+          },
+          {
+            "id": "plans-3",
+            "name": "专业订阅（合成3）"
+          },
+          {
+            "id": "plans-4",
+            "name": "基础订阅（合成4）"
+          },
+          {
+            "id": "plans-5",
+            "name": "团队订阅（合成5）"
+          },
+          {
+            "id": "plans-6",
+            "name": "专业订阅（合成6）"
+          }
+        ]
+      },
+      {
+        "id": "codes",
+        "rows": [
+          {
+            "id": "codes-1",
+            "local_code": "DEMO-EU-1",
+            "plan_id": null,
+            "verification": "pending",
+            "evidence": "待人工核对的合成目录"
+          },
+          {
+            "id": "codes-2",
+            "local_code": "DEMO-UK-2",
+            "plan_id": "plans-2",
+            "verification": "pending",
+            "evidence": "待人工核对的合成目录"
+          },
+          {
+            "id": "codes-3",
+            "local_code": "DEMO-SG-3",
+            "plan_id": "plans-3",
+            "verification": "pending",
+            "evidence": "待人工核对的合成目录"
+          },
+          {
+            "id": "codes-4",
+            "local_code": "DEMO-EU-4",
+            "plan_id": "plans-4",
+            "verification": "pending",
+            "evidence": "待人工核对的合成目录"
+          },
+          {
+            "id": "codes-5",
+            "local_code": "DEMO-UK-5",
+            "plan_id": "plans-5",
+            "verification": "pending",
+            "evidence": "待人工核对的合成目录"
+          },
+          {
+            "id": "codes-6",
+            "local_code": "DEMO-SG-6",
+            "plan_id": "plans-6",
+            "verification": "pending",
+            "evidence": "待人工核对的合成目录"
+          }
+        ]
+      },
+      {
+        "id": "charges",
+        "rows": [
+          {
+            "id": "charges-1",
+            "order_id": "订单编号样例1",
+            "code_id": "codes-1",
+            "market": "模拟欧洲",
+            "currency": "EUR",
+            "amount": 11.21,
+            "day": "2026-01-01",
+            "status": "paid"
+          },
+          {
+            "id": "charges-2",
+            "order_id": "订单编号样例2",
+            "code_id": "codes-2",
+            "market": "模拟英国",
+            "currency": "GBP",
+            "amount": 30.73,
+            "day": "2026-01-02",
+            "status": "paid"
+          },
+          {
+            "id": "charges-3",
+            "order_id": "订单编号样例3",
+            "code_id": "codes-3",
+            "market": "模拟新加坡",
+            "currency": "SGD",
+            "amount": 40.99,
+            "day": "2026-01-03",
+            "status": "paid"
+          },
+          {
+            "id": "charges-4",
+            "order_id": "订单编号样例4",
+            "code_id": "codes-4",
+            "market": "模拟欧洲",
+            "currency": "EUR",
+            "amount": 93.04,
+            "day": "2026-01-04",
+            "status": "paid"
+          },
+          {
+            "id": "charges-5",
+            "order_id": "订单编号样例5",
+            "code_id": "codes-5",
+            "market": "模拟英国",
+            "currency": "GBP",
+            "amount": 38.39,
+            "day": "2026-01-05",
+            "status": "paid"
+          },
+          {
+            "id": "charges-6",
+            "order_id": "订单编号样例6",
+            "code_id": "codes-6",
+            "market": "模拟新加坡",
+            "currency": "SGD",
+            "amount": 57.68,
+            "day": "2026-01-06",
+            "status": "paid"
+          }
+        ]
+      },
+      {
+        "id": "items",
+        "rows": [
+          {
+            "id": "items-1",
+            "source_code": "codes-1",
+            "title": "行动标题样例1",
+            "owner": "负责人样例1",
+            "day": "2026-01-01",
+            "evidence": "处理依据样例1",
+            "result": "处理结果样例1",
+            "status": "open",
+            "stale": false
+          },
+          {
+            "id": "items-2",
+            "source_code": "codes-2",
+            "title": "行动标题样例2",
+            "owner": "负责人样例2",
+            "day": "2026-01-01",
+            "evidence": "处理依据样例2",
+            "result": "处理结果样例2",
+            "status": "open",
+            "stale": false
+          },
+          {
+            "id": "items-3",
+            "source_code": "codes-3",
+            "title": "行动标题样例3",
+            "owner": "负责人样例3",
+            "day": "2026-01-01",
+            "evidence": "处理依据样例3",
+            "result": "处理结果样例3",
+            "status": "open",
+            "stale": false
+          },
+          {
+            "id": "items-4",
+            "source_code": "codes-4",
+            "title": "行动标题样例4",
+            "owner": "负责人样例4",
+            "day": "2026-01-01",
+            "evidence": "处理依据样例4",
+            "result": "处理结果样例4",
+            "status": "open",
+            "stale": false
+          },
+          {
+            "id": "items-5",
+            "source_code": "codes-5",
+            "title": "行动标题样例5",
+            "owner": "负责人样例5",
+            "day": "2026-01-01",
+            "evidence": "处理依据样例5",
+            "result": "处理结果样例5",
+            "status": "open",
+            "stale": false
+          },
+          {
+            "id": "items-6",
+            "source_code": "codes-6",
+            "title": "行动标题样例6",
+            "owner": "负责人样例6",
+            "day": "2026-01-01",
+            "evidence": "处理依据样例6",
+            "result": "处理结果样例6",
+            "status": "open",
+            "stale": false
+          }
+        ]
+      }
+    ]
+  }
+}

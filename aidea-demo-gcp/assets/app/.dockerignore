@@ -1,0 +1,9 @@
+node_modules
+dist
+.git
+.env*
+**/*.env
+evidence
+tests
+README.md
+generation-manifest.json

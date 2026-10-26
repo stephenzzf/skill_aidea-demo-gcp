@@ -1,0 +1,48 @@
+name: Validate public Skill
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  local-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: aidea-demo-gcp/assets/app/package-lock.json
+      - name: Install locked dependencies without lifecycle scripts
+        run: npm --prefix aidea-demo-gcp/assets/app ci --ignore-scripts --no-audit --no-fund
+      - name: Skill scripts and privacy guard tests (no cloud calls)
+        run: node --experimental-strip-types --test scripts/*.test.mjs aidea-demo-gcp/scripts/*.test.mjs
+      - name: Install mature secret scanner
+        run: python -m pip install detect-secrets==1.5.0
+      - name: Reject new secret candidates against reviewed fixture baseline
+        run: git ls-files -z | xargs -0 detect-secrets-hook --baseline .secrets.baseline
+      - name: Public file privacy checks
+        run: node scripts/privacy-check.mjs
+      - name: Generate and verify a synthetic Demo
+        run: >-
+          node aidea-demo-gcp/scripts/pipeline.mjs
+          --spec "$PWD/aidea-demo-gcp/references/examples/v4/service-spec.json"
+          --data "$PWD/aidea-demo-gcp/references/examples/v4/service-data.json"
+          --out "$RUNNER_TEMP/aidea-demo"
+          --report "$RUNNER_TEMP/pipeline.json"
+      - name: Scan Git history with checksum-verified Gitleaks
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          release="https://github.com/gitleaks/gitleaks/releases/download/v8.30.1"
+          archive="gitleaks_8.30.1_linux_x64.tar.gz"
+          curl --fail --location --max-time 120 --silent --show-error --output "$archive" "$release/$archive"
+          curl --fail --location --max-time 60 --silent --show-error --output checksums.txt "$release/gitleaks_8.30.1_checksums.txt"
+          grep "  $archive$" checksums.txt | sha256sum --check --strict
+          tar -xzf "$archive" gitleaks
+          ./gitleaks git --redact=100 --no-banner "$GITHUB_WORKSPACE"

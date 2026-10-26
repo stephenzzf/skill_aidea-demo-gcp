@@ -1,0 +1,53 @@
+.chat-business-card {
+  margin: 12px 0 16px;
+  overflow: hidden;
+  border: 1px solid #e6e8eb;
+  border-radius: 13px;
+  background: #fff;
+  color: #3f4145;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.chat-business-card-heading { display: flex; align-items: center; gap: 10px; padding: 13px 15px 10px; }
+.chat-business-mark { display: grid; width: 30px; height: 30px; flex: 0 0 auto; place-items: center; border-radius: 9px; background: #f3eff9; color: #7350ad; }
+.chat-business-card-heading > div { display: grid; gap: 2px; min-width: 0; }
+.chat-business-card-heading strong { color: #303238; font-size: 13px; font-weight: 600; }
+.chat-business-card-heading small,.chat-business-disclaimer,.chat-business-card-footnote { color: #858991; font-size: 11px; }
+.chat-business-metrics { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: 1px; margin: 0 14px; overflow: hidden; border: 1px solid #eff0f2; border-radius: 9px; background: #eff0f2; }
+.chat-business-metrics > div { min-width: 0; padding: 9px 11px; background: #f8f8f9; }
+.chat-business-metrics dt,.chat-business-record-fields dt { color: #858991; font-size: 11px; }
+.chat-business-metrics dd { margin: 3px 0 0; color: #34363b; font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
+.chat-business-link { display: inline-flex; min-height: 30px; align-items: center; gap: 4px; border: 0; padding: 4px 0; background: transparent; color: #66518a; font: inherit; font-size: 11px; cursor: pointer; }
+.chat-business-link:hover { color: #4e367a; text-decoration: underline; }
+.chat-business-sources { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 12px; padding: 10px 15px 0; color: #858991; font-size: 11px; }
+.chat-business-sources > span { color: #777b83; }
+.chat-business-sources button { display: inline-flex; align-items: center; gap: 4px; border: 0; padding: 0; background: transparent; color: #66518a; font: inherit; cursor: pointer; }
+.chat-business-disclaimer { display: block; padding: 6px 15px 11px; }
+.chat-business-record-fields { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 1px; margin: 0 14px; overflow: hidden; border: 1px solid #eff0f2; border-radius: 9px; background: #eff0f2; }
+.chat-business-record-fields > div { min-width: 0; padding: 8px 10px; background: #f8f8f9; }
+.chat-business-record-fields dd { margin: 2px 0 0; color: #45474c; overflow-wrap: anywhere; }
+.chat-business-card-links { padding: 5px 15px 0; }
+.chat-business-card-footnote { margin: 4px 15px 12px; }
+.chat-business-action { padding: 7px 15px 12px; }
+.chat-business-action-preview { display: inline-flex; min-height: 32px; align-items: center; gap: 6px; border: 1px solid #dedfe3; border-radius: 7px; padding: 5px 10px; background: #fff; color: #484a50; font: inherit; font-size: 11px; cursor: pointer; }
+.chat-business-action-preview:hover { border-color: #c9bcda; background: #fbf9fd; }
+.chat-business-action-preview:disabled { cursor: not-allowed; opacity: .55; }
+.chat-business-action-confirm { display: grid; gap: 8px; border: 1px solid #e7e2ee; border-radius: 9px; padding: 10px 11px; background: #fbf9fd; font-size: 11px; }
+.chat-business-action-confirm > div { display: flex; justify-content: space-between; align-items: center; }
+.chat-business-action-confirm > div button { border: 0; background: transparent; color: #797b80; cursor: pointer; }
+.chat-business-action-confirm p { margin: 0; color: #65676c; }
+.chat-business-action-confirm label { display: grid; gap: 4px; color: #65676c; }
+.chat-business-action-confirm input,.chat-business-action-confirm select { width: 100%; min-height: 32px; border: 1px solid #dedfe3; border-radius: 6px; padding: 5px 7px; background: #fff; color: #3f4145; font: inherit; }
+.chat-business-action-confirm > small,.chat-business-action-confirm [role="alert"] { margin: 0; color: #a24e48; }
+.chat-business-action-confirm footer { display: flex; justify-content: flex-end; gap: 8px; }
+.chat-business-action-confirm footer button { min-height: 32px; border: 1px solid #dedfe3; border-radius: 7px; padding: 5px 10px; background: #fff; color: #55575d; font: inherit; cursor: pointer; }
+.chat-business-action-confirm footer button:last-child { display: inline-flex; align-items: center; gap: 5px; border-color: #56585e; background: #56585e; color: #fff; }
+.chat-business-action-confirm footer button:disabled { cursor: not-allowed; opacity: .55; }
+.chat-business-receipt { display: flex; align-items: flex-start; gap: 8px; margin: 6px 14px 13px; border-radius: 8px; padding: 9px 10px; background: #f2f8f5; color: #42735e; }
+.chat-business-receipt span { display: grid; gap: 2px; }
+.chat-business-receipt strong { font-size: 11px; font-weight: 600; }
+.chat-business-receipt small { color: #678577; font-size: 10px; }
+.chat-business-stale { display: block; margin: 4px 15px 12px; color: #a35b50; font-size: 11px; }
+.chat-business-spin { animation: chat-business-spin 1s linear infinite; }
+@keyframes chat-business-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .chat-business-spin { animation: none; } }

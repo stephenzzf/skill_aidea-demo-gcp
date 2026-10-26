@@ -1,0 +1,73 @@
+.demo-app.split-demo-app > main.business-layout { margin:0; padding:0 16px; max-width:none; align-items:stretch; }
+.split-demo-app > header { padding-inline:20px; gap:12px; }
+.split-demo-app > header .header-actions { gap:12px; }
+.split-header-controls { display:flex; align-items:center; gap:10px; }
+.split-running { color:var(--purple); font-size:11px; white-space:nowrap; }
+.split-workspace { position:relative; display:flex; flex:1; flex-direction:column; width:100%; height:100%; min-height:0; min-width:0; overflow:hidden; background:#fff; border:1px solid var(--line); border-top:0; }
+.split-panel-group { flex:1; min-height:0; min-width:0; }
+.split-chat-region { height:100%; min-height:0; min-width:0; display:flex; flex-direction:column; overflow:hidden; container-type:inline-size; }
+.split-chat-heading { flex:none; display:flex; flex-direction:column; gap:4px; padding:16px 18px 13px; border-bottom:1px solid var(--line); }
+.split-chat-heading strong { font-size:14px; color:#342b3f; }
+.split-chat-heading > span { font-size:12px; color:var(--purple); }
+.split-chat-heading > small { font-size:10px; color:#817588; line-height:1.5; overflow-wrap:anywhere; }
+.split-storage-warning { padding:5px 12px; color:#8a613b; }
+.split-chat-region .chat-shell { flex:1; height:auto; width:100%; min-height:0; max-height:none; border:0; border-radius:0; box-shadow:none; overflow:hidden; }
+.split-chat-region .assistant-chat-thread .chat-feed { padding:18px 18px 12px; }
+.split-chat-region .assistant-chat-thread .composer { padding:10px 14px 8px; }
+.split-chat-region .welcome { margin:12px 0 20px; text-align:left; }
+.split-chat-region .welcome h2 { font-size:18px; }
+.split-chat-region .welcome > p { font-size:12px; }
+.split-chat-region .starter-prompts { display:flex; flex-direction:column; align-items:stretch; margin-top:16px; }
+.split-chat-region .starter-prompts button { justify-content:space-between; border-radius:10px; padding:10px 12px; font-size:12px; }
+.split-chat-region .welcome-note { text-align:left; }
+.split-chat-region .assistant-chat-thread .message.user { max-width:94%; }
+.split-chat-region .assistant-chat-thread .message-actions { flex-wrap:wrap; }
+.split-chat-region .assistant-chat-thread .chat-markdown, .split-chat-region .assistant-chat-thread .message.assistant .message-body { font-size:14px; }
+.split-demo-region { width:100%; height:100%; min-height:0; min-width:0; overflow:hidden; }
+.split-demo-region > .v3-workspace { width:100%; height:100%; max-width:none; margin:0; padding:0; border:0; border-radius:0; }
+.split-demo-region .mw-panel { border:0; border-radius:0; }
+.split-demo-region .mw-topline { padding:16px 20px; }
+.split-demo-region .mw-title-row h1 { font-size:15px; }
+.split-demo-region .mw-title-row p { display:none; }
+.split-demo-region .v3-domain-tabs { padding-inline:18px; gap:20px; }
+.split-demo-region .mw-demo-label { font-size:10px; }
+.split-region-hidden { visibility:hidden; pointer-events:none; }
+.split-separator { position:relative; width:7px; flex:none; background:#f8f6fa; border-inline:1px solid #eee9f2; outline-offset:-1px; }
+.split-separator > span { position:absolute; top:50%; left:2px; width:1px; height:26px; background:#c5b8d5; border-radius:2px; }
+.split-separator:hover,.split-separator:focus-visible { background:#eee6f9; outline:2px solid #a98bce; }
+.split-narrow .split-separator { display:none; }
+.split-mobile-switch { display:flex; flex:none; gap:4px; padding:7px 12px; border-bottom:1px solid var(--line); background:#faf8fc; }
+.split-mobile-switch button { border:0; border-radius:7px; padding:8px 14px; background:transparent; color:#7c7186; font-size:12px; }
+.split-mobile-switch button[aria-pressed="true"] { color:var(--purple); background:#eee7f7; font-weight:600; }
+.split-narrow .split-chat-heading { padding-block:10px; }
+@container (max-width:420px) {
+  .split-chat-region .assistant-chat-thread .chat-tool-result { grid-template-columns:minmax(0,1fr); }
+  .split-chat-region .assistant-chat-thread .answer-row { grid-template-columns:minmax(75px,100px) minmax(0,1fr); }
+  .split-chat-region .assistant-chat-thread .composer-bottom > span { font-size:9px; }
+  .split-chat-region .assistant-chat-thread .chat-business-card { min-width:0; }
+}
+@media(max-width:760px) {
+  .split-demo-app > header .sample-badge,.split-demo-app > header .brand > span,.split-demo-app > header .brand small { display:none; }
+  .split-demo-app > header { padding:0 12px; height:64px; flex-basis:64px; }
+  .split-demo-app > header .brand { gap:8px; min-width:0; }
+  .split-demo-app > header .brand img { width:86px; }
+  .split-demo-app > header .brand strong { max-width:100px; font-size:11px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .split-demo-app > header .header-actions,.split-header-controls { gap:7px; }
+  .split-demo-app > header .reset-button { font-size:10px; gap:3px; }
+  .split-demo-app > header .reset-button > svg { display:none; }
+  .split-demo-app > header .split-toggle > svg,.split-demo-app > header .split-stop > svg { display:block; }
+  .split-demo-app > header .split-header-controls .reset-button { min-width:36px; min-height:36px; justify-content:center; }
+  .demo-app.split-demo-app > main.business-layout { padding:0; }
+  .split-demo-region .mw-topline { padding:12px; }
+  .split-demo-region .mw-demo-label { display:none; }
+  .split-demo-app > footer { font-size:9px; padding-inline:12px; }
+}
+
+/* Keep the panel action at the boundary, separate from the draggable separator. */
+.split-boundary-toggle { position:absolute; z-index:5; top:12px; left:clamp(8px,calc(var(--split-assistant-size,35%) - 16px),calc(100% - 40px)); display:grid; place-items:center; width:32px; height:32px; padding:0; border:1px solid #e3dce9; border-radius:8px; background:#fff; color:#776287; box-shadow:0 2px 8px #3020350a; cursor:pointer; }
+.split-boundary-toggle:hover { background:#f4eff9; border-color:#ccb9df; color:var(--purple); }
+.split-boundary-toggle:focus-visible { outline:2px solid #a98bce; outline-offset:2px; }
+.split-collapsed .mw-topline { padding-left:54px; }
+.split-narrow .split-boundary-toggle { top:7px; left:auto; right:10px; width:36px; height:36px; }
+.split-narrow .split-mobile-switch { padding-right:54px; }
+@media(prefers-reduced-motion:reduce) { .split-boundary-toggle { transition:none; } }

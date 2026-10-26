@@ -1,0 +1,78 @@
+{
+  "version": 2,
+  "synthetic": true,
+  "instruction": "仅依据当前筛选与确定性分析作答。数据文件是固定种子合成样例，不代表品牌真实可见度。行动完成只改变本地行动记录，不证明可见度提升或实际发布。",
+  "topics": [
+    {
+      "id": "analysis",
+      "title": "指标解释",
+      "domainIds": [
+        "insight"
+      ],
+      "keywords": [
+        "提及率",
+        "看板",
+        "口径"
+      ],
+      "answer": "品牌提及率是被提及观察数除以当前范围全部观察数；没有观察时显示暂无数据，不应记为0%。",
+      "rows": [
+        [
+          "来源",
+          "生成阶段导入的合成CSV/JSON"
+        ]
+      ],
+      "source": "演示指标说明",
+      "followups": [
+        "怎样下钻到来源观察？"
+      ]
+    }
+  ],
+  "workspace": {
+    "datasets": [
+      {
+        "id": "observations",
+        "file": "data/observations.csv",
+        "mapping": {
+          "id": "observation",
+          "brand_id": "brand_key",
+          "brand": "brand",
+          "day": "date",
+          "model": "channel",
+          "mentioned": "mentioned",
+          "score": "quality"
+        }
+      },
+      {
+        "id": "brands",
+        "file": "data/brands.json"
+      },
+      {
+        "id": "actions",
+        "rows": [
+          {
+            "id": "GEO-A001",
+            "status": "idea",
+            "brand_id": "B01",
+            "brand": "演示品牌A",
+            "day": "2026-10-24",
+            "observation_id": "OBS-001",
+            "proposal": "",
+            "evidence": "",
+            "response": ""
+          },
+          {
+            "id": "GEO-A002",
+            "status": "idea",
+            "brand_id": "B02",
+            "brand": "演示品牌B",
+            "day": "2026-10-24",
+            "observation_id": "OBS-004",
+            "proposal": "",
+            "evidence": "",
+            "response": ""
+          }
+        ]
+      }
+    ]
+  }
+}

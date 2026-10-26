@@ -1,0 +1,6 @@
+interface:
+  display_name: "Aidea Demo GCP"
+  short_description: "先确认方案，再生成总览与业务领域演示；支持常驻AI对话与业务分栏"
+  default_prompt: "使用 $aidea-demo-gcp 调研并确认完整方案后生成 Demo：新V4启用AI时采用可拖拽、可收起的左侧智能对话，收起／展开采用分栏边界纯图标按钮，右侧方案总览后优先放已确认经营看板，再显示其他业务领域Tabs；复用统一业务表单，窄屏切换对话／Demo；说明默认中文，客户网站体验匹配原站语言与品牌，标题和导航固定、内容独立滚动。"
+policy:
+  allow_implicit_invocation: true

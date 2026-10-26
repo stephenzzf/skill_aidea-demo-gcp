@@ -1,0 +1,74 @@
+.v3-domain-navigation { border-bottom:1px solid #eeeaf1; min-width:0; }
+.v3-domain-tabs { display:flex; gap:clamp(16px,2.6vw,30px); padding:0 26px; overflow-x:auto; overscroll-behavior-x:contain; scrollbar-width:thin; }
+.v3-domain-tabs button { position:relative; flex:none; min-height:52px; padding:15px 2px 13px; border:0; border-bottom:2px solid transparent; background:none; color:#817588; font:inherit; font-size:12px; white-space:nowrap; cursor:pointer; }
+.v3-domain-tabs button[aria-selected="true"] { color:#7347bf; border-color:#7347bf; font-weight:650; }
+.v3-domain-tabs button:focus-visible { outline:3px solid #c7b2e3; outline-offset:-3px; border-radius:4px; }
+@media (max-width:760px) { .v3-domain-tabs { padding:0 16px; gap:20px; } }
+@media (max-width:420px) { .v3-domain-tabs { padding:0 12px; gap:16px; } .v3-domain-tabs button { min-height:47px; font-size:11px; } }
+
+.v3-overview-chat { padding:24px 26px 0; }
+.v3-overview-chat .chat-shell { width:100%; height:min(640px,calc(100dvh - 290px)); min-height:400px; max-height:none; box-shadow:none; }
+.v3-overview-chat .chat-heading h1 { font-size:18px; }
+.v3-overview-chat .welcome { margin:4px auto; }
+.v3-overview-chat .welcome-icon,.v3-overview-chat .welcome .eyebrow,.v3-overview-chat .welcome-note { display:none; }
+.v3-overview-chat .welcome h2 { font-size:20px; }
+.v3-overview-chat .welcome > p { font-size:11px; margin-top:5px; }
+.v3-overview-chat .starter-prompts { margin-top:12px; }
+.v3-overview-chat .starter-prompts button { display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:8px; padding:12px; font-size:11px; min-height:72px; }
+.v3-overview-chat .starter-prompts svg { align-self:center; }
+@media(max-width:650px) {
+  .v3-overview-chat { padding:12px 12px 0; }
+  .v3-overview-chat .chat-shell { height:540px; min-height:420px; }
+  .v3-overview-chat .chat-heading h1 { font-size:15px; }
+}
+
+/* V3 keeps the demo heading and tabs outside the scrolling content. */
+.v3-demo-app { height:100dvh; display:flex; flex-direction:column; overflow:hidden; }
+.v3-demo-app > header { flex:0 0 78px; }
+.v3-demo-app > main.business-layout { flex:1; min-height:0; margin:16px auto 0; overflow:hidden; }
+.v3-demo-app > main.business-layout > .v3-workspace { flex:1; height:100%; min-height:0; }
+.v3-workspace > .mw-panel { height:100%; display:flex; flex-direction:column; }
+.v3-fixed-heading { flex:none; background:#fff; position:relative; z-index:2; }
+.v3-content-scroll { flex:1; min-height:0; overflow:auto; overscroll-behavior:contain; scrollbar-width:thin; }
+.v3-chat-panel { height:100%; min-height:0; }
+.v3-chat-content { height:100%; padding:18px 26px; }
+.v3-chat-content .chat-shell { height:100%; min-height:0; max-height:none; }
+.v3-chat-content .chat-feed { min-height:0; }
+.v3-demo-app > footer { flex:none; margin:6px auto 0; padding:0 20px 8px; width:100%; max-width:1180px; }
+@media(max-width:650px) {
+  .v3-demo-app > header { flex-basis:64px; height:64px; }
+  .v3-demo-app > main.business-layout { margin-top:8px; }
+  .v3-fixed-heading .mw-topline { padding:14px 16px; }
+  .v3-fixed-heading .mw-title-row p { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .v3-chat-content { padding:12px; }
+  .v3-chat-content .composer { padding:12px; }
+}
+
+/* Chat has one compact fixed context line; business tabs retain their detail. */
+.chat-ui-active .mw-topline { padding:10px 24px; min-height:48px; }
+.chat-ui-active .mw-title-row .mw-mark { width:28px; height:28px; }
+.chat-ui-active .mw-title-row p { display:none; }
+.chat-ui-active .mw-title-row h1 { margin:0; font-size:14px; }
+.chat-ui-active .v3-domain-tabs button { min-height:46px; padding-block:12px; }
+.chat-ui-active .v3-chat-content { height:100%; min-height:0; padding:0; }
+.chat-ui-active .v3-chat-panel .chat-shell {
+  width:100%; height:100%; min-height:0; max-height:none;
+  border:0; border-radius:0; background:transparent; box-shadow:none;
+}
+.chat-ui-active .v3-chat-panel .chat-heading { display:none; }
+.chat-ui-active .v3-chat-panel .assistant-chat-thread { min-height:0; }
+.chat-ui-active .v3-chat-panel .assistant-chat-thread .chat-feed { min-height:0; }
+@media(max-width:650px) {
+ .chat-ui-active .mw-topline { padding:9px 12px; }
+ .chat-ui-active .v3-chat-content { padding:0; }
+}
+
+/* Contain off-screen assistive controls within the fixed chat layout. */
+.v3-chat-panel .chat-heading { padding:9px 20px; }
+.v3-chat-panel .message, .v3-chat-panel .composer form { position:relative; }
+.v3-demo-app { overflow:clip; }
+
+/* Notices share the fixed-height chat column instead of adding to its height. */
+.chat-ui-active .v3-content-scroll { display:flex; flex-direction:column; overflow:hidden; }
+.chat-ui-active .v3-domain-panel { flex:1; min-height:0; height:auto; }
+.chat-ui-active .v3-storage-warning { flex:none; }

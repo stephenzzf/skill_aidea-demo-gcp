@@ -1,0 +1,505 @@
+{
+  "version": 2,
+  "id": "equipment-v2",
+  "customer": "示例器材品牌",
+  "assistantName": "业务方案助手",
+  "title": "选购与服务工作台",
+  "subtitle": "让同一选购案例完成需求确认、问题核实、服务交接和结果反馈。",
+  "audience": "业务负责人、服务与运营人员",
+  "goal": "让同一选购案例完成需求确认、问题核实、服务交接和结果反馈。",
+  "solution": "以业务案例连接顾客、选购顾问与服务人员，用分析看板观察待办及咨询结果；AI提供解释与建议，业务动作由页面确认。",
+  "confirmed": true,
+  "prompts": [
+    "请分析当前看板的待核实情况",
+    "我想选旅行拍摄器材，预算和设备还没确定，请帮我澄清",
+    "请说明当前案例还需要哪些证据才能完成交接"
+  ],
+  "steps": [
+    {
+      "question": "在业务处理选择 UL-DEMO-001，补充需求并确认候选",
+      "expected": "案例从需求澄清进入候选确认，候选编号引用器材记录"
+    },
+    {
+      "question": "修改快拆需求，再次比较候选",
+      "expected": "旧建议标为待重评；重评完成前不能交接"
+    },
+    {
+      "question": "提交适配问题，预览并确认模拟交接",
+      "expected": "待交接数增加，活动记录出现模拟回执"
+    },
+    {
+      "question": "切到服务处理，接收后退回补充一次，再重新交接",
+      "expected": "保留需补充原因，同一案例继续流转"
+    },
+    {
+      "question": "补充合成核实依据和回复，顾客确认并记录反馈",
+      "expected": "案例完成，咨询完成率随状态计算，未声称购买或真实工单创建"
+    }
+  ],
+  "acceptance": [
+    "案例从需求澄清进入候选确认，候选编号引用器材记录",
+    "旧建议标为待重评；重评完成前不能交接",
+    "待交接数增加，活动记录出现模拟回执",
+    "保留需补充原因，同一案例继续流转",
+    "案例完成，咨询完成率随状态计算，未声称购买或真实工单创建"
+  ],
+  "model": {
+    "project": "",
+    "location": "",
+    "model": ""
+  },
+  "workspace": {
+    "views": [
+      "overview",
+      "records",
+      "workflow",
+      "assistant"
+    ],
+    "roles": [
+      {
+        "id": "shopper",
+        "label": "顾客体验"
+      },
+      {
+        "id": "service",
+        "label": "服务处理"
+      }
+    ],
+    "stages": [
+      {
+        "id": "needs",
+        "label": "需求澄清"
+      },
+      {
+        "id": "selected",
+        "label": "候选确认"
+      },
+      {
+        "id": "verify",
+        "label": "问题核实"
+      },
+      {
+        "id": "handoff",
+        "label": "等待交接"
+      },
+      {
+        "id": "processing",
+        "label": "服务处理"
+      },
+      {
+        "id": "resolved",
+        "label": "结果待确认"
+      },
+      {
+        "id": "closed",
+        "label": "咨询完成"
+      }
+    ],
+    "datasets": [
+      {
+        "id": "cases",
+        "label": "选购与服务案例",
+        "key": "id",
+        "origin": "synthetic",
+        "source": "固定种子 2006 的合成演示资料；不代表客户实际经营情况",
+        "fields": [
+          {
+            "id": "id",
+            "label": "案例编号",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "status",
+            "label": "处理阶段",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "day",
+            "label": "咨询日期",
+            "type": "date",
+            "required": true
+          },
+          {
+            "id": "requirements",
+            "label": "顾客需求",
+            "type": "string"
+          },
+          {
+            "id": "candidate",
+            "label": "候选器材编号",
+            "type": "string"
+          },
+          {
+            "id": "issue",
+            "label": "待核实问题",
+            "type": "string"
+          },
+          {
+            "id": "evidence",
+            "label": "核实依据",
+            "type": "string"
+          },
+          {
+            "id": "response",
+            "label": "处理回复",
+            "type": "string"
+          },
+          {
+            "id": "feedback",
+            "label": "运营反馈",
+            "type": "string"
+          },
+          {
+            "id": "stale",
+            "label": "建议待重评",
+            "type": "boolean"
+          }
+        ],
+        "relations": [
+          {
+            "field": "candidate",
+            "dataset": "products",
+            "target": "id"
+          }
+        ]
+      },
+      {
+        "id": "products",
+        "label": "候选器材",
+        "key": "id",
+        "origin": "synthetic",
+        "source": "固定种子 2006 的合成演示资料；不代表客户实际经营情况",
+        "fields": [
+          {
+            "id": "id",
+            "label": "器材编号",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "name",
+            "label": "候选器材",
+            "type": "string",
+            "required": true
+          },
+          {
+            "id": "system",
+            "label": "快拆路线",
+            "type": "string"
+          },
+          {
+            "id": "price",
+            "label": "演示参考价",
+            "type": "number",
+            "unit": "CNY"
+          },
+          {
+            "id": "weight",
+            "label": "演示重量",
+            "type": "number",
+            "unit": "kg"
+          },
+          {
+            "id": "note",
+            "label": "核实说明",
+            "type": "string"
+          }
+        ],
+        "relations": []
+      }
+    ],
+    "metrics": [
+      {
+        "id": "cases",
+        "label": "咨询案例",
+        "dataset": "cases",
+        "operation": "count",
+        "description": "咨询案例；按当前筛选后的记录计算",
+        "scope": "current",
+        "groupBy": "status",
+        "timeField": "day"
+      },
+      {
+        "id": "verification",
+        "label": "待核实案例",
+        "dataset": "cases",
+        "operation": "count",
+        "description": "待核实案例；按当前筛选后的记录计算",
+        "scope": "current",
+        "filters": [
+          {
+            "field": "status",
+            "op": "eq",
+            "value": "verify"
+          }
+        ]
+      },
+      {
+        "id": "handoffs",
+        "label": "待交接案例",
+        "dataset": "cases",
+        "operation": "count",
+        "description": "待交接案例；按当前筛选后的记录计算",
+        "scope": "current",
+        "filters": [
+          {
+            "field": "status",
+            "op": "eq",
+            "value": "handoff"
+          }
+        ]
+      },
+      {
+        "id": "closed_rate",
+        "label": "咨询完成率",
+        "dataset": "cases",
+        "operation": "ratio",
+        "description": "当前范围内 status=closed 的案例数 / 所有案例数；模拟流程完成率，不是购买转化率",
+        "scope": "current",
+        "numerator": [
+          {
+            "field": "status",
+            "op": "eq",
+            "value": "closed"
+          }
+        ],
+        "denominator": [],
+        "unit": "%"
+      }
+    ],
+    "workflow": {
+      "dataset": "cases",
+      "statusField": "status",
+      "staleField": "stale",
+      "editableFields": [
+        "requirements",
+        "candidate",
+        "issue",
+        "evidence",
+        "response",
+        "feedback"
+      ],
+      "transitions": [
+        {
+          "id": "select",
+          "label": "确认候选",
+          "from": [
+            "needs",
+            "selected"
+          ],
+          "to": "selected",
+          "role": "shopper",
+          "inputFields": [
+            {
+              "id": "requirements",
+              "label": "顾客需求",
+              "type": "string",
+              "required": true
+            },
+            {
+              "id": "candidate",
+              "label": "候选器材编号",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "requirements",
+            "candidate"
+          ],
+          "clearsStale": true
+        },
+        {
+          "id": "revise",
+          "label": "修改需求",
+          "from": [
+            "selected",
+            "verify",
+            "resolved"
+          ],
+          "to": "selected",
+          "role": "shopper",
+          "inputFields": [
+            {
+              "id": "requirements",
+              "label": "新的顾客需求",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "requirements"
+          ],
+          "invalidates": true
+        },
+        {
+          "id": "reassess",
+          "label": "确认重新比较",
+          "from": [
+            "selected"
+          ],
+          "to": "selected",
+          "role": "shopper",
+          "inputFields": [
+            {
+              "id": "candidate",
+              "label": "重新选择的器材编号",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "candidate"
+          ],
+          "clearsStale": true
+        },
+        {
+          "id": "verify",
+          "label": "提交核实问题",
+          "from": [
+            "selected"
+          ],
+          "to": "verify",
+          "role": "shopper",
+          "inputFields": [
+            {
+              "id": "issue",
+              "label": "待核实问题",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "issue"
+          ],
+          "requireFresh": true
+        },
+        {
+          "id": "handoff",
+          "label": "确认模拟交接",
+          "from": [
+            "verify"
+          ],
+          "to": "handoff",
+          "role": "shopper",
+          "inputFields": [],
+          "requiredFields": [
+            "requirements",
+            "candidate",
+            "issue"
+          ],
+          "requireFresh": true
+        },
+        {
+          "id": "receive",
+          "label": "接收咨询",
+          "from": [
+            "handoff"
+          ],
+          "to": "processing",
+          "role": "service",
+          "inputFields": [],
+          "requiredFields": []
+        },
+        {
+          "id": "return",
+          "label": "退回补充",
+          "from": [
+            "processing"
+          ],
+          "to": "needs",
+          "role": "service",
+          "inputFields": [
+            {
+              "id": "response",
+              "label": "需补充的信息",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "response"
+          ],
+          "invalidates": true
+        },
+        {
+          "id": "resolve",
+          "label": "记录核实结果",
+          "from": [
+            "processing"
+          ],
+          "to": "resolved",
+          "role": "service",
+          "inputFields": [
+            {
+              "id": "evidence",
+              "label": "核实依据",
+              "type": "string",
+              "required": true
+            },
+            {
+              "id": "response",
+              "label": "处理回复",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "evidence",
+            "response"
+          ]
+        },
+        {
+          "id": "close",
+          "label": "确认结果并反馈",
+          "from": [
+            "resolved"
+          ],
+          "to": "closed",
+          "role": "shopper",
+          "inputFields": [
+            {
+              "id": "feedback",
+              "label": "运营反馈",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "requiredFields": [
+            "evidence",
+            "response",
+            "feedback"
+          ],
+          "requireFresh": true
+        }
+      ]
+    }
+  },
+  "design": {
+    "facts": [
+      "客户已选择完整场景方案演示，采用 Codex 生成和单服务 TypeScript 应用。"
+    ],
+    "assumptions": [
+      "所有业务记录与数值均为合成演示；实际业务基线和系统接口尚未提供。"
+    ],
+    "implementation": [
+      "阶段一：验证本地完整业务流程、分析和回执。",
+      "阶段二：确认权威数据源、身份与客户系统接口后接入真实业务。",
+      "阶段三：建立真实业务基线，观察结果，不预承诺提升比例。"
+    ],
+    "coverage": [
+      {
+        "claim": "业务状态与看板使用一致数据",
+        "status": "unverified",
+        "evidence": "需运行样例闭环与指标核对"
+      },
+      {
+        "claim": "真实外部系统写入和跨设备协作",
+        "status": "planned",
+        "evidence": "本版不接真实业务系统，接口与权限需另行确认"
+      }
+    ]
+  }
+}
